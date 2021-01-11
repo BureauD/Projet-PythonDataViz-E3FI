@@ -181,7 +181,7 @@ def create_histogram(data,years_range):
         Le produit des deux nombres.
     """
     fig = px.histogram(data, x="Year", y="CO2 emissions (kt)",
-                                       nbins=14,
+                                       nbins=61,
                                        range_x=[years_range[0], years_range[1]])
 
     return fig
@@ -214,17 +214,22 @@ def create_choropleth_map(data,years_range,log_values,data_filter):
     countries_code = list()
     total_CO2_emissions = list()
     range = [years_range[0]-1960,years_range[1]-1960]
+    excluded_str = ["&","income","dividend","IBRD","OECD","World","America","Africa","Europe","Asia","Aruba"]
 
     for country in countries:
-        try:
-            country_query = data.query("`Country Name`=='"+country+"'")
-        except SyntaxError:
-            print("SyntaxError : "+country)
-        total_emission_array = country_query[data_filter].array
-        total_emission_in_range = total_emission_array[range[1]] - total_emission_array[range[0]] 
-        total_CO2_emissions.append(total_emission_in_range) 
-        countries_name.append(country_query['Country Name'].unique()[0])
-        countries_code.append(country_query['Country Code'].unique()[0])
+        if not any(str in country for str in excluded_str):
+            try:
+                country_query = data.query("`Country Name`=='"+country+"'")
+            except SyntaxError:
+                print("SyntaxError : "+country)
+            total_emission_array = country_query[data_filter].array
+            total_emission_in_range = total_emission_array[range[1]] - total_emission_array[range[0]] 
+            total_CO2_emissions.append(total_emission_in_range) 
+            if(data_filter == "Total CO2 emissions (metric tons per capita)" and total_emission_in_range>1000.00):
+                print(country)
+                print(total_emission_in_range)
+            countries_name.append(country_query['Country Name'].unique()[0])
+            countries_code.append(country_query['Country Code'].unique()[0])
 
     if(log_values):
         np.seterr(divide='ignore')
@@ -243,7 +248,7 @@ def create_choropleth_map(data,years_range,log_values,data_filter):
         marker_line_color='darkgray',
         marker_line_width=0.5,
         colorbar_tickprefix=prefix,
-        colorbar_title='CO2 emissions<br>(kt)'
+        colorbar_title=data_filter.replace("Total ","")
     ))
 
     fig.update_layout(
