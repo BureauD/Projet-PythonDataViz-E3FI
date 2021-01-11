@@ -1,3 +1,4 @@
+# Imports
 import pandas as pd
 import plotly.graph_objs as go
 import plotly
@@ -5,195 +6,465 @@ import plotly_express as px
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import unidecode
 import os
 import csv
 import requests
 import zipfile
 import io
 import fileinput
+import re
+import numpy as np
 
-def get_values_from_countries(file,countryName):
-    country = file.query("Country=='"+countryName+"'")
-    values = dict()
-    for i in range(len(file.columns)-5):
-        values[(str)(1960+i)] = country[(str)(1960+i)].array[0]
-    return values
-
-def replace_text_in_file(filename,old,new):
-    text = open(filename, "r")
-    text = ''.join([i for i in text]) \
-    .replace(old,new)
-    file = open(filename,"w")
-    file.writelines(text)
-    file.close()
+# Static values
+CSV_FILES_PATH = os.path.abspath(os.path.join(os.getcwd(),"CSVFiles"))
+CSV_FILE_EMISSION_PER_COUNTRY = ""
+CSV_FILE_EMISSION_PER_CAPITA = ""
+CSV_FILE_EMISSION_PER_INCOME = ""
+CSV_FILES = []
 
 
-def plot_from_file(filename):
-    
-    replace_text_in_file(filename,"Country Name", "Country")
-    replace_text_in_file(filename,"'","")
+def load_data_from_urls(*urls):
+    """Load data from multiple urls.
 
-    df = pd.read_csv(filename,error_bad_lines=False,encoding='utf-8',skiprows=4)
-    print(df.describe())
-    print(df.nunique)
-    
+    The data is loaded in CSVFiles directory inside the project's directory.
+
+    Parameters
+    ----------
+    urls : string
+        Websites's url to download data from.
+    """
+    for url in urls:
+        response = requests.get(url, stream=True)
+        content = io.BytesIO(response.content)
+        with zipfile.ZipFile(content) as zip_ref:
+            for zip_info in zip_ref.infolist():
+                zip_info.filename = os.path.basename(zip_info.filename).replace(" ", "")
+                try:
+                    zip_ref.extract(zip_info, CSV_FILES_PATH)
+                except PermissionError:
+                    print("Files already downloaded")
 
 
-    countries = df['Country']
+def get_csv_files():
+    """Get files's name and store them in global variable.
+    """
+    # Global variable to get
+    global CSV_FILE_EMISSION_PER_COUNTRY
+    global CSV_FILE_EMISSION_PER_CAPITA
+    global CSV_FILE_EMISSION_PER_INCOME
+    global CSV_FILES
+
+    # Look for file
+    for filename in os.listdir(CSV_FILES_PATH):
+        #replace_text_in_file(file_path, "Country Name", "Country")
+        #replace_text_in_file(file_path, "'", "")
+        if(re.match(r"API_EN.ATM.CO2E.KT_DS2_.*._csv_v2_.*.csv", filename)):
+            CSV_FILE_EMISSION_PER_COUNTRY = filename
+            CSV_FILES.append(CSV_FILE_EMISSION_PER_COUNTRY)
+        elif(re.match(r"API_EN.ATM.CO2E.PC_DS2_.*._csv_v2_.*.csv", filename)):
+            CSV_FILE_EMISSION_PER_CAPITA = filename
+            CSV_FILES.append(CSV_FILE_EMISSION_PER_CAPITA)
+        elif(re.match(r"API_EN.ATM.CO2E.PP.GD_DS2_.*._csv_v2_.*.csv", filename)):
+            CSV_FILE_EMISSION_PER_INCOME = filename
+            CSV_FILES.append(CSV_FILE_EMISSION_PER_INCOME)
+        
+
+def get_dataframe():
+    """Multiplication de deux nombres entiers.
+
+    Cette fonction ne sert pas à grand chose.
+
+    Parameters
+    ----------
+    nombre1 : int
+        Le premier nombre entier.
+    nombre2 : int
+        Le second nombre entier.
+
+        Avec une description plus longue.
+        Sur plusieurs lignes.
+
+    Returns
+    -------
+    int
+        Le produit des deux nombres.
+    """
+    files = list()
+
+    for file in CSV_FILES:
+        path = os.path.join(CSV_FILES_PATH,file)
+        df = pd.read_csv(path, encoding='utf-8', skiprows=4)
+        files.append(df)
+
+    # Get unique contries
+    countries = files[0]['Country Name']
     countries = countries.unique()
-    print(countries)
 
-    #france = df.query("Country=='France'")
-    """ for country_name in countries:
-        print(country_name)
-        #normalized_string = unidecode.unidecode(country_name)
-        country = df.query("Country=='"+country_name+"'")
-        print(country)
-        years = country['Year'].unique()
-        print(years)
-        emissions = country['Total CO2 Emissions Excluding Land-Use Change and Forestry (MtCO2)'].unique()
-        print(emissions)
-        try:
-            trace(country_name,years,emissions)
-        except SyntaxError:
-            print("SyntaxError : "+country) """
+    # Create year list
+    years = list()
+    for i in range(len(files[0].columns)-9):
+        years.append(files[0].columns[i+4])
 
-    for country_name in countries:
-        try:
-            trace(country_name,get_values_from_countries(df,country_name))
-        except SyntaxError:
-            print("SyntaxError : "+country_name)
-
-    #france = get_values_from_countries(df,'France')
-    #trace('France',france)
-
-    # chine = getValuesFromCountry(df,'Chine')
-    # trace('Chine',chine)
-
-    # japon = getValuesFromCountry(df,'Japon')
-    # trace('Japon',japon)
-
-def trace(country_name, country):
-    
-    trace = go.Scatter(
-        x= tuple(country.keys()),
-        y= tuple(country.values()),
-        mode='markers',
-        )
-
-    data = [trace]
-    layout = go.Layout(title= country_name + ' : Total CO2 Emissions Excluding Land-Use Change and Forestry (MtCO2) per year',
-                        xaxis=dict(
-                            title='Years',
-                            ticklen=5,
-                            zeroline=False,
-                            gridwidth=2,
-                        ),
-                        yaxis=dict(
-                            title='Total CO2 Emissions Excluding Land-Use Change and Forestry (MtCO2)',
-                            ticklen=5,
-                            zeroline=False,
-                            gridwidth=2,
-                        ),)
-    fig = go.Figure(data=data, layout=layout)
-    plotly.offline.plot(fig, filename='Output/Emissions_'+country_name+'.html', auto_open=False, include_plotlyjs='cdn')   
-
-def load_data_from_url(url):
-    #Download files from web
-    csv_files_path = "C:/Users/Dimitri/Desktop/ProjetPython/CSVFiles"
-    #url = 'https://static.data.gouv.fr/resources/cait-country-greenhouse-gas-emissions-data/20160831-154808/caitcountryghgemissions-csv0.zip'
-    
-    response = requests.get(url,stream=True)
-
-    with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
-        print(zip_ref.namelist())
-        for zip_info in zip_ref.infolist():
-            print(os.path.basename(zip_info.filename).replace(" ",""))
-            zip_info.filename = os.path.basename(zip_info.filename).replace(" ","")
-            try:
-                zip_ref.extract(zip_info,csv_files_path)   
-            except PermissionError:
-                print("Files already downloaded")     
-
-
-def dashboard(filename):
-
-    replace_text_in_file(filename,"Country Name", "Country")
-    replace_text_in_file(filename,"'","")
-
-    df = pd.read_csv(filename,error_bad_lines=False,encoding='utf-8',skiprows=4)
-    print(df)
-    countries = df['Country']
-    countries = countries.unique()
-    test = df.query("Country=='France'")
-    print(test)
-    """ for i in range(len(df.columns)-5):
-        values[(str)(1960+i)] = country[(str)(1960+i)].array[0] """
-
-    france = get_values_from_countries(df,'France')
-    years = france.keys()
-    emissions = france.values()
-
-    countries_data = list()
+    countries_name_data = list()
+    countries_code_data = list()
     years_data = list()
+
     emission_data = list()
+    emissions_capita_data = list()
+    emissions_income_data = list()
+
+    total_emissions_data = list()
+    total_emissions_capita_data = list()
+    total_emissions_income_data = list()
 
     for country in countries:
-        country_query = df.query("Country=='"+country+"'")
+        total_emission = 0
+        total_emission_capita = 0
+        total_emission_income = 0
+
+        try:
+            country_query_emissions = files[0].query("`Country Name`=='"+country+"'")
+            country_query_capita = files[1].query("`Country Name`=='"+country+"'")
+            country_query_income = files[2].query("`Country Name`=='"+country+"'")
+        except SyntaxError:
+            print("SyntaxError : "+country)
+            
         for year in years:
-            countries_data.append(country)
-            years_data.append(year)
-            emission_data.append(country_query[year].array[0])
+            countries_name_data.append(country)
+            countries_code_data.append(country_query_emissions["Country Code"].array[0])
+            years_data.append(int(year))
 
-    #Remplace le dict
-    data = pd.DataFrame({'Country': countries_data,
+            emission_data.append(country_query_emissions[year].array[0])
+            emissions_capita_data.append(country_query_capita[year].array[0])
+            emissions_income_data.append(country_query_income[year].array[0])
+
+            total_emission += country_query_emissions[year].sum()
+            total_emission_capita += country_query_capita[year].sum()
+            total_emission_income += country_query_income[year].sum()
+
+            total_emissions_data.append(total_emission)
+            total_emissions_capita_data.append(total_emission_capita)
+            total_emissions_income_data.append(total_emission_income)
+
+    # Create panda dataframe
+    data = pd.DataFrame({'Country Name': countries_name_data,
+                         'Country Code': countries_code_data,
                          'Year': years_data,
-                         'Émissions de CO2 (kt)': emission_data})
-    print(data)
+                         'CO2 emissions (kt)': emission_data,
+                         'CO2 emissions (metric tons per capita)': emissions_capita_data,
+                         'CO2 emissions (kg per PPP $ of GDP)':emissions_income_data,
+                         'Total CO2 emissions (kt)': total_emissions_data,
+                         'Total CO2 emissions (metric tons per capita)': total_emissions_capita_data,
+                         'Total CO2 emissions (kg per PPP $ of GDP)': total_emissions_income_data})
 
-    show_data_countries = { country:data.query("Country == @country") for country in countries}
-    show_data_years = { year:data.query("Year == @year") for year in years}
+    return data
+
+
+def create_histogram(data,years_range):
+    """Create histogram with data.
+
+    Cette fonction ne sert pas à grand chose.
+
+    Parameters
+    ----------
+    nombre1 : int
+        Le premier nombre entier.
+    nombre2 : int
+        Le second nombre entier.
+
+        Avec une description plus longue.
+        Sur plusieurs lignes.
+
+    Returns
+    -------
+    int
+        Le produit des deux nombres.
+    """
+    fig = px.histogram(data, x="Year", y="CO2 emissions (kt)",
+                                       nbins=14,
+                                       range_x=[years_range[0], years_range[1]])
+
+    return fig
+                                    
+
+def create_choropleth_map(data,years_range,log_values,data_filter):
+    """Create figure of choropleth map with data.
+
+    Cette fonction ne sert pas à grand chose.
+
+    Parameters
+    ----------
+    nombre1 : int
+        Le premier nombre entier.
+    nombre2 : int
+        Le second nombre entier.
+
+        Avec une description plus longue.
+        Sur plusieurs lignes.
+
+    Returns
+    -------
+    int
+        Le produit des deux nombres.
+    """
+    countries = data['Country Name']
+    countries = countries.unique()
+    
+    countries_name = list()
+    countries_code = list()
+    total_CO2_emissions = list()
+    range = [years_range[0]-1960,years_range[1]-1960]
+
+    for country in countries:
+        try:
+            country_query = data.query("`Country Name`=='"+country+"'")
+        except SyntaxError:
+            print("SyntaxError : "+country)
+        total_emission_array = country_query[data_filter].array
+        total_emission_in_range = total_emission_array[range[1]] - total_emission_array[range[0]] 
+        total_CO2_emissions.append(total_emission_in_range) 
+        countries_name.append(country_query['Country Name'].unique()[0])
+        countries_code.append(country_query['Country Code'].unique()[0])
+
+    if(log_values):
+        np.seterr(divide='ignore')
+        values = np.log10(total_CO2_emissions)
+        prefix = "1.e"
+    else:
+        values = total_CO2_emissions
+        prefix = ""
+
+    fig = go.Figure(data=go.Choropleth(
+        locations=countries_code,
+        z=values,
+        text=countries_name,
+        autocolorscale=True,
+        reversescale=False,
+        marker_line_color='darkgray',
+        marker_line_width=0.5,
+        colorbar_tickprefix=prefix,
+        colorbar_title='CO2 emissions<br>(kt)'
+    ))
+
+    fig.update_layout(
+        geo=dict(
+            showframe=False,
+            showcoastlines=False,
+            projection_type='equirectangular'
+        ),
+        annotations=[dict(
+            x=0.55,
+            y=0.1,
+            xref='paper',
+            yref='paper',
+            text='Source: <a href="https://databank.worldbank.org">\
+                World Bank Data</a>',
+            showarrow=False
+        )],
+    )
+
+    return fig
+
+def create_scatter(data,selected_country):
+    countries = { country:data.query("`Country Name`== @country")
+                  for country in data["Country Name"].unique()}
+
+    fig = px.scatter(countries[selected_country], x="Year", y="CO2 emissions (kt)",
+                                                  hover_name="Country Name")
+    
+    return fig
+
+def dashboard(data):
+    """Create interactive dashboard from csv file.
+
+    Cette fonction ne sert pas à grand chose.
+
+    Parameters
+    ----------
+    filename : string
+        Name of the file to read.
+    """
+    """ nan_value = float("NaN")
+    df.replace(0, nan_value, inplace=True) """
+    
+    ''' show_data_countries = { country:data.query("Country == @country") for country in countries}
+    show_data_years = { year:data.query("Year == @year") for year in years} '''
 
     """ france = df.query("Country=='France'")
     years = france['Year'].unique()
     data = { Year:france.query("Year == @Year") for Year in years}
     emissions = france['Total CO2 Emissions Excluding Land-Use Change and Forestry (MtCO2)'].unique() """
 
-    app = dash.Dash(__name__) # (3)
+    external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-    fig = px.scatter(data, x="Year", y="Émissions de CO2 (kt)",
-                        hover_name="Country"
-                        ) # (4)
+    app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+    scatter = create_scatter(data,"France")
+
+    histogram = create_histogram(data,years_range=[1960,2016])
+
+    map = create_choropleth_map(data,years_range=[1960,2016],log_values=False,data_filter="CO2 emissions (kt)")
 
     app.layout = html.Div(children=[
 
-                            html.H1(children=f'Émissions de CO2 (kt) par années',
-                                        style={'textAlign': 'center', 'color': '#7FDBFF'}), # (5)
+                            html.Div([
+                                html.H1(children=f'CO2 emissions per country',
+                                        style={'textAlign': 'center', 'color': '#7FDBFF'}),
 
-                            dcc.Graph(
-                                id='graph1',
-                                figure=fig
-                            ), # (6)
+                                dcc.Graph(
+                                    id='map',
+                                    figure=map
+                                ),
 
-                            html.Div(children=f'''
-                                The graph above shows relationship between life expectancy and
-                                GDP per capita for year. Each continent data has its own
-                                colour and symbol size is proportionnal to country population.
-                                Mouse over for details.
-                            '''), # (7)
+                                dcc.Checklist(
+                                    options=[
+                                        {'label': 'Logarithmic view', 'value': 'log_view'}
+                                    ],
+                                    value=[],
+                                    id='log_view_map'
 
+                                ),
+
+                                dcc.Dropdown(
+                                    id='data_dropdown_map',
+                                    options = [
+                                        {'label': 'Total CO2 emissions (kt)', 'value': 'Total CO2 emissions (kt)'},
+                                        {'label': 'Total CO2 emissions (metric tons per capita)', 'value': 'Total CO2 emissions (metric tons per capita)'},
+                                        {'label': 'Total CO2 emissions (kg per PPP $ of GDP)', 'value': 'Total CO2 emissions (kg per PPP $ of GDP)'}
+                                    ],
+                                    value='Total CO2 emissions (kt)',
+                                    multi=False,
+                                    clearable=False,
+                                    style={"width": "50%"}
+                                ),
+
+                                dcc.RangeSlider(
+                                    id='year_slider_map',
+                                    min=data['Year'].min(),
+                                    max=2016,
+                                    step=1,
+                                    value=[data['Year'].min(),2016],
+                                    dots=True,
+                                    allowCross=False,
+                                    marks = { str(year) : { 
+                                        'label': str(year),
+                                        'style': {'color':'#7fafdf'}
+                                        } 
+                                        for year in data["Year"].unique()}
+                                ),
+                                html.Div(id='output-container-range-slider-map'),
+
+
+                                html.Div(children=f'''
+                                    The graph above shows relationship between life expectancy and
+                                    GDP per capita for year. Each continent data has its own
+                                    colour and symbol size is proportionnal to country population.
+                                    Mouse over for details.
+                                '''),
+                            ]),
+
+                            html.Div([
+                                html.H1(children=f'Global CO2 emissions',
+                                        style={'textAlign': 'center', 'color': '#7FDBFF'}),
+
+                                dcc.Graph(
+                                    id='histogram',
+                                    figure=histogram
+                                ),
+
+                                dcc.RangeSlider(
+                                    id='year_slider_histogram',
+                                    min=data['Year'].min(),
+                                    max=2016,
+                                    step=1,
+                                    value=[data['Year'].min(),2016],
+                                    dots=True,
+                                    allowCross=False,
+                                    marks = { str(year) : { 
+                                        'label': str(year),
+                                        'style': {'color':'#7fafdf'}
+                                        } 
+                                        for year in data["Year"].unique()}
+                                ),
+                                html.Div(id='output-container-range-slider-histogram'),
+
+                                html.Div(children=f'''
+                                    The graph above shows relationship between life expectancy and
+                                    GDP per capita for year. Each continent data has its own
+                                    colour and symbol size is proportionnal to country population.
+                                    Mouse over for details.
+                                '''),
+                            ]),
+
+                            html.Div([
+                                html.H1(children=f'CO2 emissions (kt) per country',
+                                        style={'textAlign': 'center', 'color': '#7FDBFF'}),
+
+                                dcc.Graph(
+                                    id='scatter',
+                                    figure=scatter
+                                ),
+
+                                dcc.Dropdown(
+                                    id='country_dropdown_scatter',
+                                    options = [
+                                        {'label': country, 'value': country}
+                                        for country in data["Country Name"].unique()
+                                    ],
+                                    value='France',
+                                    multi=False,
+                                    clearable=False,
+                                    style={"width": "50%"}
+                                ),
+
+                                html.Div(children=f'''
+                                    The graph above shows relationship between life expectancy and
+                                    GDP per capita for year. Each continent data has its own
+                                    colour and symbol size is proportionnal to country population.
+                                    Mouse over for details.
+                                '''),
+                            ])
     ]
     )
+    @app.callback(
+        #dash.dependencies.Output('output-container-range-slider', 'children'),
+        dash.dependencies.Output('histogram', 'figure'),
+        [dash.dependencies.Input('year_slider_histogram', 'value')])
+    def update_histogram(year_range):
+        return create_histogram(data,year_range)
 
-    app.run_server(debug=True) # (8)
+    @app.callback(
+        #dash.dependencies.Output('output-container-range-slider', 'children'),
+        dash.dependencies.Output('map', 'figure'),
+        [dash.dependencies.Input('year_slider_map', 'value'),
+        dash.dependencies.Input('log_view_map', 'value'),
+        dash.dependencies.Input('data_dropdown_map', 'value')])
+    def update_map(year_range,log_view,data_filter):
+        return create_choropleth_map(data,year_range,log_view,data_filter)
+
+    @app.callback(
+        dash.dependencies.Output('scatter', 'figure'),
+        [dash.dependencies.Input('country_dropdown_scatter', 'value')])
+    def update_scatter(selected_country):
+        return create_scatter(data,selected_country)
+
+    app.run_server(debug=True)
+
 
 def main():
-    
-    #load_data_from_url("http://api.worldbank.org/v2/fr/indicator/EN.ATM.CO2E.KT?downloadformat=csv")
-    #load_data_from_url("http://api.worldbank.org/v2/fr/indicator/EN.ATM.CO2E.PC?downloadformat=csv")
-    dashboard('CSVFiles/API_EN.ATM.CO2E.KT_DS2_fr_csv_v2_1754986.csv')
-    #plot_from_file('CSVFiles/API_EN.ATM.CO2E.KT_DS2_fr_csv_v2_1754986.csv')
+    """Main function.
+
+    Call the methods to set up the dashboard.
+    """
+    load_data_from_urls("http://api.worldbank.org/v2/en/indicator/EN.ATM.CO2E.KT?downloadformat=csv",
+                        "http://api.worldbank.org/v2/en/indicator/EN.ATM.CO2E.PC?downloadformat=csv",
+                        "http://api.worldbank.org/v2/en/indicator/EN.ATM.CO2E.PP.GD?downloadformat=csv")
+
+    get_csv_files()
+
+    data = get_dataframe()
+
+    dashboard(data)
 
 
 if __name__ == "__main__":
