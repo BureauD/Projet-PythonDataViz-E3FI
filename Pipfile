@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-panda = "*"
 plotly = "*"
 plotly-express = "*"
 dash = "*"
@@ -12,6 +11,7 @@ dash-core-components = "*"
 dash-html-components = "*"
 requests = "*"
 numpy = "*"
+pandas = "*"
 
 [dev-packages]
 
