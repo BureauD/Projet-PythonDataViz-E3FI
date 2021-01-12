@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+panda = "*"
+plotly = "*"
+plotly-express = "*"
+dash = "*"
+dash-core-components = "*"
+dash-html-components = "*"
+requests = "*"
+numpy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"

@@ -204,7 +204,7 @@ def create_histogram(data,years_range,data_filter):
 
     else:
         fig = px.histogram(data, x="Year", y="CO2 emissions (kt)",
-                                           nbins=11,
+                                           nbins=12,
                                            range_x=[years_range[0], years_range[1]])
 
     return fig
@@ -334,7 +334,8 @@ def create_pie_chart(data,years_range,data_filter):
     countries_name.append("Other countries")
     total_CO2_emissions.append(other_countries_total_emissions)
 
-    fig = go.Figure(data=[go.Pie(labels=countries_name,values=total_CO2_emissions)])
+    fig = go.Figure(data=[go.Pie(labels=countries_name,values=total_CO2_emissions,
+                                                       textposition='inside')])
 
     return fig
 
@@ -354,7 +355,7 @@ def dashboard(data):
 
     scatter = create_scatter(data,"France")
 
-    histogram = create_histogram(data,years_range=[1960,2015],data_filter="Global CO2 emissions per income (kt)")
+    histogram = create_histogram(data,years_range=[1960,2014],data_filter="Global CO2 emissions per income (kt)")
 
     map = create_choropleth_map(data,years_range=[1960,2016],log_values=False,data_filter="CO2 emissions (kt)")
 
@@ -433,7 +434,7 @@ def dashboard(data):
                                         {'label': 'Global CO2 emissions per year (kt)', 'value': 'Global CO2 emissions per year (kt)'},
                                         {'label': 'Global CO2 emissions per income (kt)', 'value': 'Global CO2 emissions per income (kt)'}
                                     ],
-                                    value='Global CO2 emissions per income (kt)',
+                                    value='Global CO2 emissions per year (kt)',
                                     multi=False,
                                     clearable=False,
                                     style={"width": "50%"}
