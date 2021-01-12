@@ -100,6 +100,8 @@ def get_dataframe():
     countries = files[0]['Country Name']
     countries = countries.unique()
 
+    countries = files[0]['Country Name']
+    countries = countries.unique()
     # Create year list
     years = list()
     for i in range(len(files[0].columns)-9):
@@ -127,7 +129,10 @@ def get_dataframe():
             country_query_capita = files[1].query("`Country Name`=='"+country+"'")
             country_query_income = files[2].query("`Country Name`=='"+country+"'")
         except SyntaxError:
-            print("SyntaxError : "+country)
+            if(country == "Cote d'Ivoire"):
+                country_query_emissions = files[0].query("`Country Code`=='CIV'")
+                country_query_capita = files[1].query("`Country Code`=='CIV'")
+                country_query_income = files[2].query("`Country Code`=='CIV'")
             
         for year in years:
             countries_name_data.append(country)
@@ -160,7 +165,7 @@ def get_dataframe():
     return data
 
 
-def create_histogram(data,years_range):
+def create_histogram(data,years_range,data_filter):
     """Create histogram with data.
 
     Cette fonction ne sert pas à grand chose.
@@ -180,9 +185,27 @@ def create_histogram(data,years_range):
     int
         Le produit des deux nombres.
     """
-    fig = px.histogram(data, x="Year", y="CO2 emissions (kt)",
-                                       nbins=61,
-                                       range_x=[years_range[0], years_range[1]])
+    range = [years_range[0]-1960,years_range[1]-1960]
+
+    fig = plotly.subplots.make_subplots(rows=1, cols=1)
+    if(data_filter == 'Global CO2 emissions per income (kt)'):
+        income_types =  ['Low income', 'Lower middle income', 'Middle income', 'Upper middle income', 'High income']
+        emissions_income = list()
+        for income_type in income_types:
+            query = data.query("`Country Name`=='"+income_type+"'")
+            total_emission_array = query["Total CO2 emissions (kt)"].array
+            emissions_income.append(total_emission_array[range[1]] - total_emission_array[range[0]])
+        
+        df = pd.DataFrame({'Income type':income_types,
+                           'Total CO2 emissions (kt)':emissions_income})
+
+        fig = px.histogram(df,x="Income type",y="Total CO2 emissions (kt)",
+                                                nbins=5)
+
+    else:
+        fig = px.histogram(data, x="Year", y="CO2 emissions (kt)",
+                                           nbins=11,
+                                           range_x=[years_range[0], years_range[1]])
 
     return fig
                                     
@@ -221,13 +244,11 @@ def create_choropleth_map(data,years_range,log_values,data_filter):
             try:
                 country_query = data.query("`Country Name`=='"+country+"'")
             except SyntaxError:
-                print("SyntaxError : "+country)
+                if(country == "Cote d'Ivoire"):
+                    country_query = data.query("`Country Code`=='CIV'")
             total_emission_array = country_query[data_filter].array
             total_emission_in_range = total_emission_array[range[1]] - total_emission_array[range[0]] 
             total_CO2_emissions.append(total_emission_in_range) 
-            if(data_filter == "Total CO2 emissions (metric tons per capita)" and total_emission_in_range>1000.00):
-                print(country)
-                print(total_emission_in_range)
             countries_name.append(country_query['Country Name'].unique()[0])
             countries_code.append(country_query['Country Code'].unique()[0])
 
@@ -279,6 +300,44 @@ def create_scatter(data,selected_country):
     
     return fig
 
+def create_pie_chart(data,years_range,data_filter):
+    countries = data['Country Name']
+    countries = countries.unique()
+
+    if(data_filter == 'Total CO2 emissions (kt)'):
+        other_countries_range = 10000000.00
+    elif(data_filter == 'Total CO2 emissions (metric tons per capita)'):
+        other_countries_range = 300.00
+    else:
+        other_countries_range = 10.00
+    countries_name = list()
+    other_countries_total_emissions = 0
+    total_CO2_emissions = list()
+    range = [years_range[0]-1960,years_range[1]-1960]
+    excluded_str = ["&","income","dividend","IBRD","OECD","World","America","Africa","Europe","Asia","Aruba"]
+
+    for country in countries:
+        if not any(str in country for str in excluded_str):
+            try:
+                country_query = data.query("`Country Name`=='"+country+"'")
+            except SyntaxError:
+                if(country == "Cote d'Ivoire"):
+                    country_query = data.query("`Country Code`=='CIV'")
+            total_emission_array = country_query[data_filter].array
+            total_emission_in_range = total_emission_array[range[1]] - total_emission_array[range[0]]
+            if(total_emission_in_range <= other_countries_range):
+                other_countries_total_emissions += total_emission_in_range
+            else:
+                total_CO2_emissions.append(total_emission_in_range) 
+                countries_name.append(country_query['Country Name'].unique()[0])
+
+    countries_name.append("Other countries")
+    total_CO2_emissions.append(other_countries_total_emissions)
+
+    fig = go.Figure(data=[go.Pie(labels=countries_name,values=total_CO2_emissions)])
+
+    return fig
+
 def dashboard(data):
     """Create interactive dashboard from csv file.
 
@@ -289,26 +348,17 @@ def dashboard(data):
     filename : string
         Name of the file to read.
     """
-    """ nan_value = float("NaN")
-    df.replace(0, nan_value, inplace=True) """
-    
-    ''' show_data_countries = { country:data.query("Country == @country") for country in countries}
-    show_data_years = { year:data.query("Year == @year") for year in years} '''
-
-    """ france = df.query("Country=='France'")
-    years = france['Year'].unique()
-    data = { Year:france.query("Year == @Year") for Year in years}
-    emissions = france['Total CO2 Emissions Excluding Land-Use Change and Forestry (MtCO2)'].unique() """
-
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
     scatter = create_scatter(data,"France")
 
-    histogram = create_histogram(data,years_range=[1960,2016])
+    histogram = create_histogram(data,years_range=[1960,2015],data_filter="Global CO2 emissions per income (kt)")
 
     map = create_choropleth_map(data,years_range=[1960,2016],log_values=False,data_filter="CO2 emissions (kt)")
+
+    pie = create_pie_chart(data,years_range=[1960,2016],data_filter="CO2 emissions (kt)")
 
     app.layout = html.Div(children=[
 
@@ -377,8 +427,66 @@ def dashboard(data):
                                     figure=histogram
                                 ),
 
+                                dcc.Dropdown(
+                                    id='data_dropdown_histogram',
+                                    options = [
+                                        {'label': 'Global CO2 emissions per year (kt)', 'value': 'Global CO2 emissions per year (kt)'},
+                                        {'label': 'Global CO2 emissions per income (kt)', 'value': 'Global CO2 emissions per income (kt)'}
+                                    ],
+                                    value='Global CO2 emissions per income (kt)',
+                                    multi=False,
+                                    clearable=False,
+                                    style={"width": "50%"}
+                                ),
+
                                 dcc.RangeSlider(
                                     id='year_slider_histogram',
+                                    min=data['Year'].min(),
+                                    max=2016,
+                                    step=1,
+                                    value=[data['Year'].min(),2015],
+                                    dots=True,
+                                    allowCross=False,
+                                    marks = { str(year) : { 
+                                        'label': str(year),
+                                        'style': {'color':'#7fafdf'}
+                                        } 
+                                        for year in data["Year"].unique()}
+                                ),
+                                html.Div(id='output-container-range-slider-histogram'),
+
+                                html.Div(children=f'''
+                                    The graph above shows relationship between life expectancy and
+                                    GDP per capita for year. Each continent data has its own
+                                    colour and symbol size is proportionnal to country population.
+                                    Mouse over for details.
+                                '''),
+                            ]),
+
+                            html.Div([
+                                html.H1(children=f'CO2 emissions (kt) per country',
+                                        style={'textAlign': 'center', 'color': '#7FDBFF'}),
+
+                                dcc.Graph(
+                                    id='pie',
+                                    figure=pie
+                                ),
+
+                                dcc.Dropdown(
+                                    id='data_dropdown_pie',
+                                    options = [
+                                        {'label': 'Total CO2 emissions (kt)', 'value': 'Total CO2 emissions (kt)'},
+                                        {'label': 'Total CO2 emissions (metric tons per capita)', 'value': 'Total CO2 emissions (metric tons per capita)'},
+                                        {'label': 'Total CO2 emissions (kg per PPP $ of GDP)', 'value': 'Total CO2 emissions (kg per PPP $ of GDP)'}
+                                    ],
+                                    value='Total CO2 emissions (kt)',
+                                    multi=False,
+                                    clearable=False,
+                                    style={"width": "50%"}
+                                ),
+
+                                dcc.RangeSlider(
+                                    id='year_slider_pie',
                                     min=data['Year'].min(),
                                     max=2016,
                                     step=1,
@@ -391,7 +499,6 @@ def dashboard(data):
                                         } 
                                         for year in data["Year"].unique()}
                                 ),
-                                html.Div(id='output-container-range-slider-histogram'),
 
                                 html.Div(children=f'''
                                     The graph above shows relationship between life expectancy and
@@ -434,9 +541,10 @@ def dashboard(data):
     @app.callback(
         #dash.dependencies.Output('output-container-range-slider', 'children'),
         dash.dependencies.Output('histogram', 'figure'),
-        [dash.dependencies.Input('year_slider_histogram', 'value')])
-    def update_histogram(year_range):
-        return create_histogram(data,year_range)
+        [dash.dependencies.Input('year_slider_histogram', 'value'),
+        dash.dependencies.Input('data_dropdown_histogram', 'value')])
+    def update_histogram(year_range,data_filter):
+        return create_histogram(data,year_range,data_filter)
 
     @app.callback(
         #dash.dependencies.Output('output-container-range-slider', 'children'),
@@ -453,6 +561,13 @@ def dashboard(data):
     def update_scatter(selected_country):
         return create_scatter(data,selected_country)
 
+    @app.callback(
+        dash.dependencies.Output('pie', 'figure'),
+        [dash.dependencies.Input('year_slider_pie', 'value'),
+        dash.dependencies.Input('data_dropdown_pie', 'value')])
+    def update_pie(year_range,data_filter):
+        return create_pie_chart(data,year_range,data_filter)
+
     app.run_server(debug=True)
 
 
@@ -461,6 +576,7 @@ def main():
 
     Call the methods to set up the dashboard.
     """
+    
     load_data_from_urls("http://api.worldbank.org/v2/en/indicator/EN.ATM.CO2E.KT?downloadformat=csv",
                         "http://api.worldbank.org/v2/en/indicator/EN.ATM.CO2E.PC?downloadformat=csv",
                         "http://api.worldbank.org/v2/en/indicator/EN.ATM.CO2E.PP.GD?downloadformat=csv")
