@@ -19,9 +19,9 @@ Puis lancer le programme avec
 python main.py
 ```
 
-Sous Linux - Taper la commande python3 
+Sous Linux - Taper la commande : 
 ```bash
--m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 Puis lancer le programme avec 
 ```bash
