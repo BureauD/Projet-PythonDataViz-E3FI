@@ -3,6 +3,7 @@ certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
 dash==1.18.1
+dash-bootstrap-components==0.11.1
 dash-core-components==1.14.1
 dash-html-components==1.1.1
 dash-renderer==1.8.3
