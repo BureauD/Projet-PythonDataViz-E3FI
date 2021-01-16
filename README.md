@@ -46,6 +46,19 @@ python3 main.py
 
 ## Developer Guide
 
+Après avoir importer les différentes modules, le script commence par récupérer les données du sites avec 
+un appel à la fonction `load_data_from_urls(*urls)` qui prend un nombre variable d'url en entrée. Si il n'existe
+pas encore de dossier "CSVFiles", le module `requests` est utilisé pour télécharger et extraire les données dans le
+répertoire "CSVFiles".  
+  
+Ensuite, on récupère la liste des noms des fichiers avec la fonction `get_csv_files()` pour pouvoir le passer en paramètre de
+`get_dataframe(csv_files)` pour générer le dataframe qui sera utiliser pour le reste du programme.  
 
+Finalement, le dashboard peut être lancé avec `dashboard(data)`. Ici les différentes fonctions pour créer les graphiques sont appelées : 
+* create_scatter(data, selected_country)
+* create_global_histogram(data, years_range)
+* create_income_histogram(data, years_range)
+* create_choropleth_map(data, years_range, log_view, data_filter)
+* create_pie_chart(data, years_range, data_filter)
 
 ## Rapport d'analyse
