@@ -29,7 +29,7 @@ python3 main.py
 ```
 5. Naviguer vers http://127.0.0.1:8050/
 
-## Developper Guide
+## Developer Guide
 
 
 
