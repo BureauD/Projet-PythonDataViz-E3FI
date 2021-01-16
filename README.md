@@ -6,9 +6,12 @@
  Le dashboard contient plusieurs graphiques sur les émissions totales de CO2 dans
  le monde, les émissions par habitants et également par rapport au pouvoir d'achat
  relatif au PIB des différents pays.
- Parmi ces graphiques, on y retrouve une carte du monde avec des données géolocalisées,
- un diagramme circulaire, un histogramme, un diagramme à barre et un diagramme à point
- pour chaque pays.
+ Parmi ces graphiques, on y retrouve: - Une carte du monde avec des données géolocalisées
+ - Un diagramme circulaire
+ - Un histogramme
+ - Un diagramme à barre 
+ - Un diagramme à point pour chaque pays
+ 
  
 ## User Guide:
 
