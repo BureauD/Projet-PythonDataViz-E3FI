@@ -117,7 +117,8 @@ def get_dataframe(csv_files):
     # Get unique contries
     countries = files[0]['Country Name']
     countries = countries.unique()
-    excluded_str = ["&", "dividend", "IBRD", "OECD", "World", "America", "Africa", "Asia", "Aruba"]
+    excluded_str = ["&", "dividend", "IBRD", "OECD", "World", "America", "Africa", "Asia", "Aruba",
+                    "Europe", "IDA", "Euro", "Fragile"]
     countries = [country for country in countries
                  if not any(str in country for str in excluded_str)]
 
@@ -367,7 +368,7 @@ def create_pie_chart(data, years_range, data_filter):
             countries_name.append(country_query['Country Name'].unique()[0])
 
     # Add the "Other countries" category
-    countries_name.append("Other countries")
+    countries_name.append("Other countries (less than {})".format(other_countries_range))
     total_CO2_emissions.append(other_countries_total_emissions)
 
     fig = go.Figure(data=[go.Pie(labels=countries_name,
