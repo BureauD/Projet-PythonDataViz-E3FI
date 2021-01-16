@@ -5,7 +5,10 @@
 1. Télécharger le projet depuis Github
 2. Extraire le dossier
 3. Naviguer dans le dossier depuis l'invite de commande Windows our le terminal Linux
-4. Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirement.
+4. Utiliser le gestionnaire de paquets [pip](https://pip.pypa.io/en/stable/) pour installer les modules nécessaires.  
+   Les modules nécessaires sont `pandas`, `plotly`, `plotly_express`, `dash`,
+`dash_bootstrap_components`, `dash_core_components`, `dash_html_components`
+et `numpy`
 
 Sous Windows - Taper la commande : 
 ```bash
@@ -16,12 +19,18 @@ Puis lancer le programme avec
 python main.py
 ```
 
-Sous Linux - Taper la commande python3 
+Sous Linux - Taper la commande : 
 ```bash
--m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 Puis lancer le programme avec 
 ```bash
 python3 main.py
 ```
 5. Naviguer vers http://127.0.0.1:8050/
+
+## Developer Guide
+
+
+
+## Rapport d'analyse
