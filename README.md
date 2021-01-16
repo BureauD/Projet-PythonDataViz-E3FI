@@ -1,12 +1,12 @@
 # Projet-PythonDataViz-E3FI
 
  Ce projet permet de générer un dashboard interactif sur les émissions de CO2 dans le monde
- depuis des fichiers au format .csv récupérer dynamiquement sur internet.
+ depuis des fichiers au format .csv récupérer dynamiquement sur Internet.
  Les données sont récupérées depuis le site https://databank.worldbank.org/  
- Le dashboard contient plusieurs graphiques sur les émissions total de CO2 dans
+ Le dashboard contient plusieurs graphiques sur les émissions totales de CO2 dans
  le monde, les émissions par habitants et également par rapport au pouvoir d'achat
  relatif au PIB des différents pays.
- Parmis ces graphiques, on y retrouve une carte du monde avec des données géolocalisées,
+ Parmi ces graphiques, on y retrouve une carte du monde avec des données géolocalisées,
  un diagramme circulaire, un histogramme, un diagramme à barre et un diagramme à point
  pour chaque pays.
  
