@@ -54,10 +54,10 @@
 
  Ensuite, on récupère la liste des noms des fichiers avec la fonction `get_csv_files()` pour pouvoir le passer en paramètre de
  `get_dataframe(csv_files)` pour générer le dataframe qui sera utiliser pour le reste du programme. Après avoir lu chaque csv,
- les pays qui seront présents dans le nouveau dataframe sont filtré en amont. Pour ne garder que les pays uniques, et non certains ensembles
+ les pays qui seront présents dans le nouveau dataframe sont filtrés en amont. Pour ne garder que les pays uniques, et non certains ensembles
  de pays tels que les rassemblement de continents ou les unions de plusieurs pays, tous les pays contenant l'un des mots suivant est enlevé des
  pays à parcourir : `"&", "dividend", "IBRD", "OECD", "World", "America", "Africa", "Asia", "Aruba",
-                     "Europe", "IDA", "Euro", "Fragile"`  
+                     "Europe", "IDA", "Euro", "Fragile", "Middle income"`  
  Le nouveau dataframe possède 12 768 lignes et 9 colonnes, qui sont les suivantes :
  - 'Country Name'
  - 'Country Code'
@@ -70,16 +70,16 @@
  - 'Total CO2 emissions (kg per PPP $ of GDP)'
 
  Ces colonnes sont associées aux différentes listes de données qui ont été remplies en itérant sur chaque pays et chaque année.
- Les colonnes représentant les émissions totales représentent le nombre total d'émissions émis dans les années d'avant : la donnée représentant
+ Les colonnes représentant les émissions totales représentent le nombre total d'émissions émis dans les années d'avant : par exemple, la donnée représentant
  le nombre total d'émissions en 1980 prend la valeur de la somme de toutes les lignes d'avant.
  Ceci permet d'avoir les informations des émissions émises lors d'une certaine période.  
 
  Finalement, le dashboard peut être lancé avec `dashboard(data)`. Tout d'abord les données par rapport aux émissions selon le revenu sont séparées 
- du dataframe principale pour ne pas fausser les données et seront seulement utilisé pour l'histogramme concerneant les revenus.
+ du dataframe principale pour ne pas fausser les données et seront seulement utilisées pour l'histogramme concernant les revenus.
  Ensuite, les différentes fonctions pour créer les graphiques sont appelées :
  * `create_scatter(data, selected_country)` : Cette fonction prend les données et un pays en paramètre et retourne un graphique en nuage de points
  sur les émissions par années du pays en particulier. Le graphique est créé grâce à la fonction `px.scatter()` du module `plotly_express`.
- * `create_global_histogram(data, years_range)` : Cette fonction prend les données principale et réalise un histogramme simple sur 
+ * `create_global_histogram(data, years_range)` : Cette fonction prend les données principales et réalise un histogramme simple sur 
  les émissions globales de CO2 depuis 1960 jusqu'à 2016. Il y a en x les années et y les émissions, et chaque colonne représente une période 
  de quatre années. Le graphique est créé grâce à la fonction `px.histogram()` du module `plotly_express`.
  * `create_income_histogram(data, years_range)`: Cette fonction permet de créer un histogramme de 5 colonnes avec les données concernant le revenu
@@ -89,8 +89,8 @@
  Il y a également un paramètre `log_view` qui permet d'afficher les données selon une échelle logarithmique. Le graphique est créé grâce à 
  la fonction `go.Choropleth()` du module `plotly`.
  * `create_pie_chart(data, years_range, data_filter)`: Cette fonction permet de créer le diagramme circulaire en fonctions des données 
- spécifié par `data_filter`. Comme il y a un nombre élevé de pays à afficher et que un grand nombre de ces pays représente un pourcentage 
- assez faible du total, les pays considérés en dessous d'un certain seuil sont rassemblé dans la catégorie `Other countries`. 
+ spécifiées par `data_filter`. Comme il y a un nombre élevé de pays à afficher et que un grand nombre de ces pays représente un pourcentage 
+ assez faible du total, les pays considérés en dessous d'un certain seuil sont rassemblés dans la catégorie `Other countries`. 
  Le graphique est créé grâce à la fonction `go.Pie()` du module `plotly`.  
 
  Tout les graphiques nécessaires au dashboard sont maintenant prêt, et on peut les ajouter à l'app qui a été créée tels que `app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])`. L'app utilise le module `dash_bootstrap_components` pour bien organiser les graphiques sur la page en terme de lignes (`dbc.Row`) et de colonnes (`dbc.Col`), l'organisation de la page étant définie dans la fonction `app.layout()`. Ce layout possèdent trois conteneur `html.Div` : 
@@ -98,25 +98,25 @@
  - Le second contient l'histogramme des émissions globales au cours du temps et l'histogramme en fonction des revenus. Comme précédemment, il y a un curseur pour sélectionner la période sur laquelle on veut les données.
  - Le dernier contient seulement le diagramme à point et un menu de sélection pour choisir le pays.  
 
- Il faut également mettre à jour les graphiques lorsque que les différents menus de sélection et autres éléments interactifs correspondant sont changé. Pour cela, il faut créer trois fonctions, une pour chaque conteneur, avec le décorateur `app.callback(dash.dependencies.Output(),dash.dependencies.Input())` devant les fonctions. Pour chaque fonction, la ou les sorties sont les différents graphiques associés au conteneur et les entrées sont les valeurs des éléments interactifs. Les fonctions peuvent ainsi appeler les fonctions qui créent le graphique approprié avec les nouveaux paramètres pour actualiser la page.  
+ Il faut également mettre à jour les graphiques lorsque les différents menus de sélection et autres éléments interactifs correspondant sont changés. Pour cela, il faut créer trois fonctions, une pour chaque conteneur, avec le décorateur `app.callback(dash.dependencies.Output(),dash.dependencies.Input())` devant les fonctions. Pour chaque fonction, la ou les sorties sont les différents graphiques associés au conteneur et les entrées sont les valeurs des éléments interactifs. Les fonctions peuvent ainsi appeler les fonctions qui créent le graphique approprié avec les nouveaux paramètres pour actualiser la page.  
 
  Pour finir, l'app est lancée avec `app.run_server(debug=True)` et le dashboard est prêt à l'utilisation.
 
 ## Rapport d'analyse
 
- En analysant les données du dashboard on peut faire différents constats par rapport aux émissions de globales de CO2 et qui sont les plus grands émetteurs de CO2. Les   différentes données sont exprimées soit en kilotonnes, en tonnes par habitants ou en kilogramms par parité du pouvoir d'achat relatif au produit intérieur brut.
+ En analysant les données du dashboard on peut faire différents constats par rapport aux émissions globales de CO2 et quels sont les pays qui émettent le plus de CO2. Les   différentes données sont exprimées soit en kilotonnes, en tonnes par habitants ou en kilogrammes par parité du pouvoir d'achat relatif au produit intérieur brut.
 
  ![FirstRow](https://user-images.githubusercontent.com/50491971/104844887-ee573080-58d2-11eb-883b-aaa11a6d9314.PNG)
  ![FirstRowLog](https://user-images.githubusercontent.com/50491971/104850271-68e17980-58ee-11eb-8d1b-3ef6a6493131.PNG)
 
- Si on prend la carte et le diagramme circulaire des émissions depuis 1960, on remarque 3 pays qui sortent du lot : les Etats-Unis, la Chine, et la Russie anciennement URSS. En effet, on remarque qu'à eux seuls, ces pays ont émis 51.1 % des émissions de CO2 soit plus de la moitié des émissions totales dans le monde.
- On remarque également que d'autres pays d'Asie tel que l'Inde ou le Japon, ou d'Europe avec la France ou l'Allemagne représentent également un pourcentage conséquent, mais bien loin des trois plus gros pays. Fait important, presque 80 % des émissions globales ont été émises par à peine une vingtaine de pays. La plupart des pays avec de faibles émissions se trouvent dans l'hémisphère Sud, avec de très nombreux pays plus pauvres d'Afrique qui ne dépasse pas les 1 M de kilotonnes de CO2 émis sur les 60 dernières années.
+ Si on prend la carte et le diagramme circulaire des émissions depuis 1960, on remarque 3 pays qui sortent du lot : les Etats-Unis, la Chine, et la Russie (anciennement l'URSS). En effet, on remarque qu'à eux seuls, ces pays ont émis 51.1 % des émissions de CO2 soit plus de la moitié des émissions totales dans le monde.
+ On remarque également que d'autres pays d'Asie tel que l'Inde ou le Japon, ou d'Europe avec la France ou l'Allemagne représentent également un pourcentage conséquent des émissions, mais bien loin des trois plus gros pays. Fait important, presque 80 % des émissions globales ont été émises par à peine une vingtaine de pays. La plupart des pays avec de faibles émissions se trouvent dans l'hémisphère Sud, avec de très nombreux pays plus pauvres d'Afrique qui ne dépasse pas les 1 M de kilotonnes de CO2 émis sur les 60 dernières années.
 
  De plus, même parmi les 3 premiers, il existe de grands écarts : les Etats-Unis sont loin devant avec 270 M de kilotonnes de CO2 émises sur cette période, la Chine est en seconde place avec 189 M et la Russie avec 132 M. Pourtant si on regarde seulement entre 2000 et 2016, on fait un constat bien différent, car la Chine est à présent numéro 1 avec 120M d'émissions, les Etats-Unis deuxième avec 87M et la Russie troisième avec près de 27M, presque à égalité avec l'Inde. Ces 3 pays représentent à présent 48.54 % des émissions totales, comme on peut le voir ci-dessous : 
 
  ![FirstRow2000-2016](https://user-images.githubusercontent.com/50491971/104846712-34fd5880-58dc-11eb-942b-53eae07b8bd2.PNG)
 
- À l'inverse, si on regarde les graphiques sur la période de 1960 à 2000, les Etats-Unis reprennent la première place avec 170 M, la Russie/URSS est deuxième avec 105 M et la Chine se trouve à 68 M. En effet, ces écarts reflète un monde en pleine guerre froide et d'une Chine pas encore complétement industrialisé. En effet, les Etats-Unis et l'URSS représentaient à eux seuls 42.8 % des émissions et les pays à moins de 10 M d'émission au total représentaient 26.8 % des émissions.
+ À l'inverse, si on regarde les graphiques sur la période de 1960 à 2000, les Etats-Unis reprennent la première place avec 170 M, la Russie/URSS est deuxième avec 105 M et la Chine se trouve à 68 M. En effet, ces écarts reflètent un monde en pleine guerre froide et d'une Chine pas encore complétement industrialisé. En effet, les Etats-Unis et l'URSS représentaient à eux seuls 42.8 % des émissions et les pays à moins de 10 M d'émission au total représentaient 26.8 % des émissions.
 
  ![FirstRow1960-2000](https://user-images.githubusercontent.com/50491971/104846715-36c71c00-58dc-11eb-812a-fc66b6b37db2.PNG) 
 
@@ -139,7 +139,7 @@
 
  ![FirstRowCapita](https://user-images.githubusercontent.com/50491971/104849902-97f6eb80-58ec-11eb-92c1-e8cf87b3df65.PNG)  
 
- En effet, les Etats-Unis et la Russie sont toujours assez haut comparé au reste du monde avec 943 tonnes par habitant en Russie et 1 067 tonnes par habitants aux Etats-Unis. On remarque également d'autres pays qui se démarquait beaucoup moins avant tels que le Canada avec 888 t, l'Australie avec 821 t ou l'Arabie Saoudite avec 718 t. Si on regarde la Chine avec 154 t par habitants, on remarque qu'elle se trouve en dessous de la majorité des pays d'Europe et plein d'autres pays. Évidemment, on remarque que des pays peu peuplé et riches tels que le Qatar (3 000 t), les Émirats Arabes Unis (1 767 t) ou le Luxembourg (1 517 t) se trouvent loin devant le reste du monde. L'Asie, l'Afrique et l'Amérique du Sud sont donc ceux qui émettent le moins par habitants, représentant pourtant un pourcentage très conséquent de la population mondiale, c'est-à-dire 6.2 milliards d'habitants. 
+ En effet, les Etats-Unis et la Russie sont toujours assez haut, comparé au reste du monde, avec 943 tonnes par habitant en Russie et 1 067 tonnes par habitants aux Etats-Unis. On remarque également d'autres pays qui se démarquaient beaucoup moins avant tels que le Canada avec 888 t, l'Australie avec 821 t ou l'Arabie Saoudite avec 718 t. Si on regarde la Chine avec 154 t par habitants, on remarque qu'elle se trouve en dessous de la majorité des pays d'Europe et plein d'autres pays. Évidemment, on remarque que des pays peu peuplés et riches tels que le Qatar (3 000 t), les Émirats Arabes Unis (1 767 t) ou le Luxembourg (1 517 t) se trouvent loin devant le reste du monde. L'Asie, l'Afrique et l'Amérique du Sud sont donc ceux qui émettent le moins par habitants, représentant pourtant un pourcentage très conséquent de la population mondiale, c'est-à-dire 6.2 milliards d'habitants. 
 
  Finalement, on peut faire la comparaison au niveau de l'économie.
  ![FirstRowPPP](https://user-images.githubusercontent.com/50491971/104851485-8534e480-58f5-11eb-872e-0f81d46abe30.PNG)  
@@ -152,12 +152,12 @@
  Sur la période entière, on constate évidemment une augmentation constante des émissions de CO2 au cours du temps, passant de 33 M de kilotonnes de CO2 émises entre 1960 et 1963, à 136 M entre 2012 et 2015, soit plus de 4 fois plus. 
  
  ![Histo1960-2000](https://user-images.githubusercontent.com/50491971/104852978-1b6d0880-58fe-11eb-83ad-024791308e57.PNG)
- Si on regarde seulement sur la période de 1960 à 2000, on remarque les émissions totales sur 4 ans ont augmenté de 58 M en 40 ans. La plus grande augmentation a également eu lieu entre 1960 et 1975 avec plus de 25 M de d'émissions en plus de 1972 à 1975.   
+ Si on regarde seulement sur la période de 1960 à 2000, on remarque que les émissions totales sur 4 ans ont augmenté de 58 M en 40 ans. La plus grande augmentation a également eu lieu entre 1960 et 1975 avec plus de 25 M de d'émissions en plus de 1972 à 1975.   
  
  ![Histo2000-2016](https://user-images.githubusercontent.com/50491971/104852980-1e67f900-58fe-11eb-83bf-2dcb063558f2.PNG)
  Entre 2000 et 2016, il y a eu une augmentation de 39 M d'émissions globales sur 4 ans. C'est moins qu'entre 1960 et 2000, mais sur une période bien plus courte. On remarque donc bien que la tendance s'accélère et est à la hausse.
 
-Il est également intéressant de comparer les émissions de CO2 en fonction du revenu. La banque mondiale identifie [quatre catégories de revenu](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups#:~:text=For%20the%20current%202021%20fiscal,those%20with%20a%20GNI%20per) selon revenu national brut d'un pays divisé par son nombre d'habitants :
+Il est également intéressant de comparer les émissions de CO2 en fonction du revenu. La banque mondiale identifie [quatre catégories de revenu](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups#:~:text=For%20the%20current%202021%20fiscal,those%20with%20a%20GNI%20per) selon le revenu national brut d'un pays divisé par son nombre d'habitants :
  
  - Moins de $1.035 : **Bas revenu**
  - Entre $1.036 et $4,045 : **Revenu moyen bas**
@@ -168,7 +168,7 @@ Il est également intéressant de comparer les émissions de CO2 en fonction du 
  On remarque donc qu'entre 1960 et 2000, la majorité des émissions de CO2 sont produites par les pays de à revenu moyen haut (254 M) et haut (417 M) soit plus de 90 % des émissions en représentant 55 % de la population mondiale en 2000.
  
  ![Income2000-2016](https://user-images.githubusercontent.com/50491971/104853781-5a518d00-5903-11eb-8a54-f85a2cc17b13.PNG)  
- Entre 2000 et 2016, les à revenu moyen haut (216 M) et haut (213 M) émettent toujours 90 % des émissions en représentant 51 % de la population mondiale en 2016.
+ Entre 2000 et 2016, les pays à revenu moyen haut (216 M) et haut (213 M) émettent toujours 90 % des émissions en représentant 51 % de la population mondiale en 2016.
 On remarque donc un bond du revenu moyen haut qui dépasse les pays à revenu haut en terme d'émissions, mais les disparités restent similaires.  
  
  Au final, ce dashboard permet de faire un certain nombre d'analyses sur plusieurs critères et donc de suivre l'évolution des émissions de CO2 dans le monde et dans les différents pays.
