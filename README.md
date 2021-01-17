@@ -115,6 +115,15 @@ De plus, même parmi les 3 premiers, il existe de grands écarts : les Etats-Uni
 
 ![FirstRow2000-2016](https://user-images.githubusercontent.com/50491971/104846712-34fd5880-58dc-11eb-942b-53eae07b8bd2.PNG)
 
+A l'inverse, si on regarde les graphiques sur la période de 1960 à 2000, les Etats-Unis reprennent la première place avec 170 M, la Russie/URSS est deuxième avec 105 M et la Chine se trouve à 68 M. En effet, ces écart reflète le contexte de la guerre froide et d'une Chine pas encore complétement industrialisé. En effet, les Etats-Unis et l'URSS représentaient à eux seuls 42.8 % des émissions et les pays à moins de 10M d'émission au total représentaient 26.8 % des émissions.
+
+![FirstRow1960-2000](https://user-images.githubusercontent.com/50491971/104846715-36c71c00-58dc-11eb-812a-fc66b6b37db2.PNG)  
+
+
+Si on regarde de plus près les courbes d'émission pour les Etats-Unis, la Russie et la Chine on remarque bien la même chose et quelques autres détails. 
+![UnitedStates](https://user-images.githubusercontent.com/50491971/104846717-3a5aa300-58dc-11eb-8b39-29a2fedcd37c.PNG)
+![RussianFederation](https://user-images.githubusercontent.com/50491971/104846718-3af33980-58dc-11eb-8d5a-cee4c8b8ed24.PNG)
+![China](https://user-images.githubusercontent.com/50491971/104846723-3c246680-58dc-11eb-8a7e-1fcf5ad8ad22.PNG)  
 
 
 
