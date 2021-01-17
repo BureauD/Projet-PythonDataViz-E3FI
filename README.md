@@ -52,11 +52,27 @@ pas encore de dossier "CSVFiles", le module `requests` est utilisé pour téléc
 répertoire "CSVFiles".  
   
 Ensuite, on récupère la liste des noms des fichiers avec la fonction `get_csv_files()` pour pouvoir le passer en paramètre de
-`get_dataframe(csv_files)` pour générer le dataframe qui sera utiliser pour le reste du programme.  
+`get_dataframe(csv_files)` pour générer le dataframe qui sera utiliser pour le reste du programme. Après avoir lu chaque csv,
+les pays qui seront présent dans le nouveau dataframe sont filtré en amont. Pour ne garder que les pays unique, et non certains ensembles
+de pays tels que les rassemblement de continents ou les unions de plusieurs pays, tous les pays contenant l'un des mots suivant est enlevé des
+pays à parcourir : `"&", "dividend", "IBRD", "OECD", "World", "America", "Africa", "Asia", "Aruba",
+                    "Europe", "IDA", "Euro", "Fragile"`
+Le nouveau dataframe possède 12825 lignes et 9 colonnes qui sont les suivantes :
+- 'Country Name'
+- 'Country Code'
+- 'Year'
+- 'CO2 emissions (kt)'
+- 'CO2 emissions (metric tons per capita)'
+- 'CO2 emissions (kg per PPP $ of GDP)'
+- 'Total CO2 emissions (kt)'
+- 'Total CO2 emissions (metric tons per capita)'
+- 'Total CO2 emissions (kg per PPP $ of GDP)'
+
 
 Finalement, le dashboard peut être lancé avec `dashboard(data)`. Ici les différentes fonctions pour créer les graphiques sont appelées : 
-* create_scatter(data, selected_country)
-* create_global_histogram(data, years_range)
+* create_scatter(data, selected_country) : Cette fonction prend les données et un pays en paramètre et retourne un graphique en nuage de points
+sur les émissions par années du pays en particulier.
+* create_global_histogram(data, years_range) : Cette fonction p
 * create_income_histogram(data, years_range)
 * create_choropleth_map(data, years_range, log_view, data_filter)
 * create_pie_chart(data, years_range, data_filter)
