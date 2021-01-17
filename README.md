@@ -104,26 +104,32 @@ Pour finir, l'app est lancée avec `app.run_server(debug=True)` et le dashboard 
 
 ## Rapport d'analyse
 
-En analysant les données du dashboard on peut faire différents constats par rapport aux émissions de globales de CO2 et qui sont les plus grands émetteurs de CO2.  
+En analysant les données du dashboard on peut faire différents constats par rapport aux émissions de globales de CO2 et qui sont les plus grands émetteurs de CO2. Les différentes données sont exprimées soit en kilotonnes, en tonnes par habitants ou en kilogramms par parité du pouvoir d'achat relatif au produit intérieur brut.
 
 ![FirstRow](https://user-images.githubusercontent.com/50491971/104844887-ee573080-58d2-11eb-883b-aaa11a6d9314.PNG)
 
 Si on prend la carte et le diagramme circulaire des émissions depuis 1960, on remarque 3 pays qui sortent du lot : les Etats-Unis, la Chine, et la Russie anciennement URSS. En effet, on remarque qu'à eux seuls, ces pays ont émis 51.1 % des émissions de CO2 soit plus de la moitié des émissions totales dans le monde.
 On remarque également que d'autres pays d'Asie tel que l'Inde ou le Japon, ou d'Europe avec la France ou l'Allemagne représentent également un pourcentage conséquent, mais bien loin des trois plus gros pays. On remarque également que presque 80 % des émissions globales ont été émises par à peine une vingtaine de pays.
 
-De plus, même parmi les 3 premiers, il existe de grands écarts : les Etats-Unis sont loin devant avec 270 M de kilotonnes de CO2 émises sur cette période, la Chine est en seconde place avec 189 M et la Russie avec 132 M. Pourtant si on regarde seulement entre 2000 et 2016, on fait un constat bien différent, car la Chine est à présent numéro 1 avec 120M d'émissions, les Etats-Unis deuxième avec 87M et la Russie troisième avec près de 27M, presque à égalité avec l'Inde. Ces 3 pays représentent à présent 48.54 % des émissions totales, comme on peut le voir ci-dessous :  
+De plus, même parmi les 3 premiers, il existe de grands écarts : les Etats-Unis sont loin devant avec 270 M de kilotonnes de CO2 émises sur cette période, la Chine est en seconde place avec 189 M et la Russie avec 132 M. Pourtant si on regarde seulement entre 2000 et 2016, on fait un constat bien différent, car la Chine est à présent numéro 1 avec 120M d'émissions, les Etats-Unis deuxième avec 87M et la Russie troisième avec près de 27M, presque à égalité avec l'Inde. Ces 3 pays représentent à présent 48.54 % des émissions totales, comme on peut le voir ci-dessous : 
 
 ![FirstRow2000-2016](https://user-images.githubusercontent.com/50491971/104846712-34fd5880-58dc-11eb-942b-53eae07b8bd2.PNG)
 
-A l'inverse, si on regarde les graphiques sur la période de 1960 à 2000, les Etats-Unis reprennent la première place avec 170 M, la Russie/URSS est deuxième avec 105 M et la Chine se trouve à 68 M. En effet, ces écart reflète le contexte de la guerre froide et d'une Chine pas encore complétement industrialisé. En effet, les Etats-Unis et l'URSS représentaient à eux seuls 42.8 % des émissions et les pays à moins de 10M d'émission au total représentaient 26.8 % des émissions.
+À l'inverse, si on regarde les graphiques sur la période de 1960 à 2000, les Etats-Unis reprennent la première place avec 170 M, la Russie/URSS est deuxième avec 105 M et la Chine se trouve à 68 M. En effet, ces écarts reflète un monde en pleine guerre froide et d'une Chine pas encore complétement industrialisé. En effet, les Etats-Unis et l'URSS représentaient à eux seuls 42.8 % des émissions et les pays à moins de 10 M d'émission au total représentaient 26.8 % des émissions.
 
-![FirstRow1960-2000](https://user-images.githubusercontent.com/50491971/104846715-36c71c00-58dc-11eb-812a-fc66b6b37db2.PNG)  
+![FirstRow1960-2000](https://user-images.githubusercontent.com/50491971/104846715-36c71c00-58dc-11eb-812a-fc66b6b37db2.PNG) 
 
 
-Si on regarde de plus près les courbes d'émission pour les Etats-Unis, la Russie et la Chine on remarque bien la même chose et quelques autres détails. 
+Si on regarde de plus près les courbes d'émission pour les Etats-Unis, la Russie/URSS et la Chine, on remarque bien la même chose et quelques autres détails importants. 
 ![UnitedStates](https://user-images.githubusercontent.com/50491971/104846717-3a5aa300-58dc-11eb-8b39-29a2fedcd37c.PNG)
 ![RussianFederation](https://user-images.githubusercontent.com/50491971/104846718-3af33980-58dc-11eb-8d5a-cee4c8b8ed24.PNG)
-![China](https://user-images.githubusercontent.com/50491971/104846723-3c246680-58dc-11eb-8a7e-1fcf5ad8ad22.PNG)  
+![China](https://user-images.githubusercontent.com/50491971/104846723-3c246680-58dc-11eb-8a7e-1fcf5ad8ad22.PNG) 
+
+Pour les Etats-Unis, on remarque une croissance importante et constante, avec des émissions de CO2 qui vont de 3 M à presque 6 M par an, jusqu'à la crise financière de 2007-2008 qui marque la fin de cette croissance, qui maintenant baisse faiblement. 
+
+Pour l'URSS, on remarque une évolution similaire lors de la guerre froide avec une croissance des émissions de 1.5 M en 1960 à presque 4 M au plus haut, en 1988. On constate un déclin jusqu'à la chute de l'URSS en 1991 qu'il est très important. En effet, bien que les émissions passent de 3.5 M en 1991 à 2 M en 1992, ceci est dû à la séparation entre les différents membres de l'URSS et la Russie. Malgré tout, il y a tout de même une baisse des émissions jusqu'en 1998 où la Russie retombe au même niveau d'émissions que l'URSS en 1960. Après les années 2000, la Russie se maintient entre 1.5 M de 2 M d'émissions par ans. 
+
+Pour la Chine, son niveau d'émission se trouve à 780 k en 1960 et est toujours au même niveau en 1970. À partir de ce moment, les émissions de la Chine comment à augmenter faiblement pour dépasser 1 M en 1975, 2 M en 1986 et 3M en 1994 pour se retrouver à 3.4 M en 2000. La Chine a ensuite une augmentation vertigineuse de ses émissions de CO2 et comptabilise plus de 10.2 M de kilotonnes de CO2 émises en 2013 et 2014. Les émissions commencent à faiblir lentement à partir de ce moment, mais on remarque tout de même une moyenne de 10 M d'émissions entre 2011 et 2016.
 
 
 
