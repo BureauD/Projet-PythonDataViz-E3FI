@@ -12,8 +12,9 @@
  - Un diagramme circulaire
  - Un histogramme
  - Un diagramme à barre 
- - Un diagramme à point pour chaque pays
+ - Un diagramme à point pour chaque pays  
  
+ De plus, chaque graphique possède un ou plusieurs éléments interactifs permettant de visualiser différentes données sur différentes périodes.
  
 ## User Guide:
 
