@@ -104,4 +104,5 @@ Pour finir, l'app est lancée avec `app.run_server(debug=True)` et le dashboard 
 
 ## Rapport d'analyse
 
-![alt text](https://d1fmx1rbmqrxrr.cloudfront.net/cnet/optim/i/edit/2019/04/eso1644bsmall__w770.jpg)
+![FirstRow](https://user-images.githubusercontent.com/50491971/104844887-ee573080-58d2-11eb-883b-aaa11a6d9314.PNG)
+
