@@ -103,3 +103,5 @@ Il faut également mettre à jour les graphiques lorsque que les différents men
 Pour finir, l'app est lancée avec `app.run_server(debug=True)` et le dashboard est prêt à l'utilisation.
 
 ## Rapport d'analyse
+
+![alt text](https://d1fmx1rbmqrxrr.cloudfront.net/cnet/optim/i/edit/2019/04/eso1644bsmall__w770.jpg)
