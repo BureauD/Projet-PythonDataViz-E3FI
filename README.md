@@ -104,5 +104,12 @@ Pour finir, l'app est lancée avec `app.run_server(debug=True)` et le dashboard 
 
 ## Rapport d'analyse
 
+En analysant les données du dashboard on peut faire différents constats par rapport aux émissions de globales de CO2 et qui sont les plus grands émetteurs de CO2.  
+
 ![FirstRow](https://user-images.githubusercontent.com/50491971/104844887-ee573080-58d2-11eb-883b-aaa11a6d9314.PNG)
+
+Si on prend la carte et la diagramme circulaire des émissions depuis 1960 on remarque 3 pays qui sortent du lot : Les Etats-Unis, la Chine, et la Russie anciennement URSS. En effet, on remarque que à eux seuls, ces pays ont émis 51.1% des émissions de CO2 soit plus de la moitié des émissions totales dans le monde.
+On remarque également que d'autres pays d'Asie tel que l'Inde ou le Japon, ou d'Europe avec la France ou l'Allemagne réprésente également un pourcentage conséquent mais bien loin des trois plus gros pays. On remarque également que presque 80% des émissions globales ont été émises par à peine une vingtaines de pays.
+
+De plus, même parmi les 3 premiers il existe de grands écarts : les Etats-Unis sont loin devant avec 270M de kilotonnes de CO2 émises sur cette période, la Chine est en seconde place avec 189M et la Russie avec 132M.
 
