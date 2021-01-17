@@ -58,7 +58,7 @@
  de pays tels que les rassemblement de continents ou les unions de plusieurs pays, tous les pays contenant l'un des mots suivant est enlevé des
  pays à parcourir : `"&", "dividend", "IBRD", "OECD", "World", "America", "Africa", "Asia", "Aruba",
                      "Europe", "IDA", "Euro", "Fragile"`  
- Le nouveau dataframe possède 12 825 lignes et 9 colonnes, qui sont les suivantes :
+ Le nouveau dataframe possède 12 768 lignes et 9 colonnes, qui sont les suivantes :
  - 'Country Name'
  - 'Country Code'
  - 'Year'
@@ -139,11 +139,35 @@
 
  ![FirstRowCapita](https://user-images.githubusercontent.com/50491971/104849902-97f6eb80-58ec-11eb-92c1-e8cf87b3df65.PNG)  
 
- En effet, les Etats-Unis et la Russie sont toujours assez haut comparé au reste du monde avec 943 tonnes par habitant en Russie et 1 067 tonnes par habitants aux Etats-Unis. On remarque également d'autres pays qui se démarquait beaucoup moins avant tels que le Canada avec 888 t, l'Australie avec 821 t ou l'Arabie Saoudite avec 718 t. Si on regarde la Chine avec 154 t par habitants, on remarque qu'elle se trouve en dessous de la majorité des pays d'Europe et plein d'autres pays. Evidemment, on remarque que des pays peu peuplé et riches tels que le Qatar (3 000 t), les Émirats Arabes Unis (1 767 t) ou le Luxembourg (1 517 t) se trouvent loin devant le reste du monde. L'Asie, l'Afrique et l'Amérique du Sud sont donc ceux qui émettent le moins par habitants, représentant pourtant un pourcentage très conséquent de la population mondiale, c'est-à-dire 6.2 milliards d'habitants.  
+ En effet, les Etats-Unis et la Russie sont toujours assez haut comparé au reste du monde avec 943 tonnes par habitant en Russie et 1 067 tonnes par habitants aux Etats-Unis. On remarque également d'autres pays qui se démarquait beaucoup moins avant tels que le Canada avec 888 t, l'Australie avec 821 t ou l'Arabie Saoudite avec 718 t. Si on regarde la Chine avec 154 t par habitants, on remarque qu'elle se trouve en dessous de la majorité des pays d'Europe et plein d'autres pays. Évidemment, on remarque que des pays peu peuplé et riches tels que le Qatar (3 000 t), les Émirats Arabes Unis (1 767 t) ou le Luxembourg (1 517 t) se trouvent loin devant le reste du monde. L'Asie, l'Afrique et l'Amérique du Sud sont donc ceux qui émettent le moins par habitants, représentant pourtant un pourcentage très conséquent de la population mondiale, c'est-à-dire 6.2 milliards d'habitants. 
 
  Finalement, on peut faire la comparaison au niveau de l'économie.
  ![FirstRowPPP](https://user-images.githubusercontent.com/50491971/104851485-8534e480-58f5-11eb-872e-0f81d46abe30.PNG)  
  
- On peut voir ici une comparaison des émissions de CO2 en kilogramme en fonction de la parité du pouvoir d'achat sur la base du dollars. Cette unité permet de comparer les émissions en fonction du coût relatifs des mesures de production. Cette mesure est donc plus élevé en Asie et en Russie que dans le reste du monde.  
+ On peut voir ici une comparaison des émissions de CO2 en kilogramme en fonction de la parité du pouvoir d'achat sur la base du dollar. Cette unité permet de comparer les émissions en fonction du coût relatif des mesures de production. Cette mesure est donc plus élevée en Asie et en Russie que dans le reste du monde. 
  
+ Pour finir, le dashboard possède également un histogramme qui met en perspectives les émissions totales de CO2 dans le monde par bloc de 4 années, ainsi qu'un diagramme à barre sur les émissions de CO2 par tranche de revenu. Les émissions sont en kilotonnes.
+ ![SecondRow](https://user-images.githubusercontent.com/50491971/104852603-3b9bc800-58fc-11eb-8933-0b1b028a80fe.PNG)  
+ 
+ Sur la période entière, on constate évidemment une augmentation constante des émissions de CO2 au cours du temps, passant de 33 M de kilotonnes de CO2 émises entre 1960 et 1963, à 136 M entre 2012 et 2015, soit plus de 4 fois plus. 
+ 
+ ![Histo1960-2000](https://user-images.githubusercontent.com/50491971/104852978-1b6d0880-58fe-11eb-83ad-024791308e57.PNG)
+ Si on regarde seulement sur la période de 1960 à 2000, on remarque les émissions totales sur 4 ans ont augmenté de 58 M en 40 ans. La plus grande augmentation a également eu lieu entre 1960 et 1975 avec plus de 25 M de d'émissions en plus de 1972 à 1975.   
+ 
+ ![Histo2000-2016](https://user-images.githubusercontent.com/50491971/104852980-1e67f900-58fe-11eb-83bf-2dcb063558f2.PNG)
+ Entre 2000 et 2016, il y a eu une augmentation de 39 M d'émissions globales sur 4 ans. C'est moins qu'entre 1960 et 2000, mais sur une période bien plus courte. On remarque donc bien que la tendance s'accélère et est à la hausse.
+
+Il est également intéressant de comparer les émissions de CO2 en fonction du revenu. La banque mondiale identifie quatre catégories de revenu national brut d'un pays divisé par son nombre d'habitants :
+ 
+ - Moins de $1.035 : **Bas revenu**
+ - Entre $1.036 et $4,045 : **Revenu moyen bas**
+ - Entre $4.046 et $12.535 : **Revenu moyen haut**
+ - Plus de $12.535 : **Haut revenu**  
+ 
+ ![Income1960-2000](https://user-images.githubusercontent.com/50491971/104853779-5a518d00-5903-11eb-829e-8da443bd5373.PNG)
+ On remarque donc qu'entre 1960 et 2000, la majorité des émissions de CO2 sont produites par les pays de à revenu moyen haut (254 M) et haut (417 M) soit plus de 90 % des émissions en représentant 55 % de la population mondiale en 2000.
+ 
+ ![Income2000-2016](https://user-images.githubusercontent.com/50491971/104853781-5a518d00-5903-11eb-8a54-f85a2cc17b13.PNG)  
+ Entre 2000 et 2016, les à revenu moyen haut (216 M) et haut (213 M) émettent toujours 90 % des émissions en représentant 51 % de la population mondiale en 2016.
+On remarque donc un bond du revenu moyen haut qui dépasse les pays à revenu haut en terme d'émissions, mais les disparités restent similaires.
  
