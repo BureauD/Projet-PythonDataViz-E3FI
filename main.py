@@ -118,7 +118,7 @@ def get_dataframe(csv_files):
     countries = files[0]['Country Name']
     countries = countries.unique()
     excluded_str = ["&", "dividend", "IBRD", "OECD", "World", "America", "Africa", "Asia", "Aruba",
-                    "Europe", "IDA", "Euro", "Fragile"]
+                    "Europe", "IDA", "Euro", "Fragile", "Middle income"]
     countries = [country for country in countries
                  if not any(str in country for str in excluded_str)]
 
@@ -180,7 +180,7 @@ def get_dataframe(csv_files):
                          'Total CO2 emissions (kt)': total_emissions_data,
                          'Total CO2 emissions (metric tons per capita)': total_emissions_capita_data,
                          'Total CO2 emissions (kg per PPP $ of GDP)': total_emissions_income_data})
-
+    
     return data
 
 
@@ -219,7 +219,7 @@ def create_income_histogram(data, years_range):
         plotly.graph_objs._figure.Figure: Figure of emissions based on income histogram
     """
     range = [years_range[0]-1960, years_range[1]-1960]
-    income_types = ["Low income", "Lower middle income", "Middle income",
+    income_types = ["Low income", "Lower middle income",
                     "Upper middle income", "High income"]
 
     # Histogram for emissions based on income class
@@ -234,7 +234,7 @@ def create_income_histogram(data, years_range):
 
     fig = px.histogram(df, x="Income type", y="Total CO2 emissions (kt)",
                        color_discrete_sequence=px.colors.qualitative.Vivid,
-                       nbins=5)
+                       nbins=4)
 
     return fig
 
