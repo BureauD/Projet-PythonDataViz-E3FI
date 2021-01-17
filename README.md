@@ -107,6 +107,7 @@ Pour finir, l'app est lancée avec `app.run_server(debug=True)` et le dashboard 
 En analysant les données du dashboard on peut faire différents constats par rapport aux émissions de globales de CO2 et qui sont les plus grands émetteurs de CO2. Les différentes données sont exprimées soit en kilotonnes, en tonnes par habitants ou en kilogramms par parité du pouvoir d'achat relatif au produit intérieur brut.
 
 ![FirstRow](https://user-images.githubusercontent.com/50491971/104844887-ee573080-58d2-11eb-883b-aaa11a6d9314.PNG)
+![FirstRowLog](https://user-images.githubusercontent.com/50491971/104850271-68e17980-58ee-11eb-8d1b-3ef6a6493131.PNG)
 
 Si on prend la carte et le diagramme circulaire des émissions depuis 1960, on remarque 3 pays qui sortent du lot : les Etats-Unis, la Chine, et la Russie anciennement URSS. En effet, on remarque qu'à eux seuls, ces pays ont émis 51.1 % des émissions de CO2 soit plus de la moitié des émissions totales dans le monde.
 On remarque également que d'autres pays d'Asie tel que l'Inde ou le Japon, ou d'Europe avec la France ou l'Allemagne représentent également un pourcentage conséquent, mais bien loin des trois plus gros pays. On remarque également que presque 80 % des émissions globales ont été émises par à peine une vingtaine de pays.
@@ -121,15 +122,21 @@ De plus, même parmi les 3 premiers, il existe de grands écarts : les Etats-Uni
 
 
 Si on regarde de plus près les courbes d'émission pour les Etats-Unis, la Russie/URSS et la Chine, on remarque bien la même chose et quelques autres détails importants. 
-![UnitedStates](https://user-images.githubusercontent.com/50491971/104846717-3a5aa300-58dc-11eb-8b39-29a2fedcd37c.PNG)
-![RussianFederation](https://user-images.githubusercontent.com/50491971/104846718-3af33980-58dc-11eb-8d5a-cee4c8b8ed24.PNG)
-![China](https://user-images.githubusercontent.com/50491971/104846723-3c246680-58dc-11eb-8a7e-1fcf5ad8ad22.PNG) 
 
-Pour les Etats-Unis, on remarque une croissance importante et constante, avec des émissions de CO2 qui vont de 3 M à presque 6 M par an, jusqu'à la crise financière de 2007-2008 qui marque la fin de cette croissance, qui maintenant baisse faiblement. 
+![UnitedStates](https://user-images.githubusercontent.com/50491971/104846717-3a5aa300-58dc-11eb-8b39-29a2fedcd37c.PNG)  
+
+Pour les Etats-Unis, on remarque une croissance importante et constante, avec des émissions de CO2 qui vont de 3 M à presque 6 M par an, jusqu'à la crise financière de 2007-2008 qui marque la fin de cette croissance, qui maintenant baisse faiblement.  
+
+![RussianFederation](https://user-images.githubusercontent.com/50491971/104846718-3af33980-58dc-11eb-8d5a-cee4c8b8ed24.PNG)  
 
 Pour l'URSS, on remarque une évolution similaire lors de la guerre froide avec une croissance des émissions de 1.5 M en 1960 à presque 4 M au plus haut, en 1988. On constate un déclin jusqu'à la chute de l'URSS en 1991 qu'il est très important. En effet, bien que les émissions passent de 3.5 M en 1991 à 2 M en 1992, ceci est dû à la séparation entre les différents membres de l'URSS et la Russie. Malgré tout, il y a tout de même une baisse des émissions jusqu'en 1998 où la Russie retombe au même niveau d'émissions que l'URSS en 1960. Après les années 2000, la Russie se maintient entre 1.5 M de 2 M d'émissions par ans. 
 
-Pour la Chine, son niveau d'émission se trouve à 780 k en 1960 et est toujours au même niveau en 1970. À partir de ce moment, les émissions de la Chine comment à augmenter faiblement pour dépasser 1 M en 1975, 2 M en 1986 et 3M en 1994 pour se retrouver à 3.4 M en 2000. La Chine a ensuite une augmentation vertigineuse de ses émissions de CO2 et comptabilise plus de 10.2 M de kilotonnes de CO2 émises en 2013 et 2014. Les émissions commencent à faiblir lentement à partir de ce moment, mais on remarque tout de même une moyenne de 10 M d'émissions entre 2011 et 2016.
+![China](https://user-images.githubusercontent.com/50491971/104846723-3c246680-58dc-11eb-8a7e-1fcf5ad8ad22.PNG) 
 
+Pour la Chine, son niveau d'émission se trouve à 780 k en 1960 et est toujours au même niveau en 1970. À partir de ce moment, les émissions de la Chine comment à augmenter faiblement pour dépasser 1 M en 1975, 2 M en 1986 et 3M en 1994 pour se retrouver à 3.4 M en 2000. La Chine a ensuite une augmentation vertigineuse de ses émissions de CO2 et comptabilise plus de 10.2 M de kilotonnes de CO2 émises en 2013 et 2014. Les émissions commencent à faiblir lentement à partir de ce moment, mais on remarque tout de même une moyenne de 10 M d'émissions entre 2011 et 2016. Cette tendance devrait continuer alors que la Chine fini le plus gros de son industrialisation.  
+
+Néanmoins, il est important de ne pas seulement prendre en compte les émissions totales de chaque pays mais également des les mettre en perspectives avec les différentes spécificités des pays. En effet, en 1960, la population chinoise représentait plus de 3,7 fois la population des Etats-Unis, 667 M pour 327 M, et plus de 4.2 fois en 2016. A coté, la Russie est passé de 120 M à 145 M sur cette période. Si on regarde ces graphiques en prenant comme unités les émissions de CO2 en tonnes par habitants, on remarque un résultat bien différent. 
+
+![FirstRowCapita](https://user-images.githubusercontent.com/50491971/104849902-97f6eb80-58ec-11eb-92c1-e8cf87b3df65.PNG)  
 
 
