@@ -164,10 +164,11 @@ Il est également intéressant de comparer les émissions de CO2 en fonction du 
  - Entre $4.046 et $12.535 : **Revenu moyen haut**
  - Plus de $12.535 : **Haut revenu**  
  
- ![Income1960-2000](https://user-images.githubusercontent.com/50491971/104853779-5a518d00-5903-11eb-829e-8da443bd5373.PNG)
+ ![Income1960-2000](https://user-images.githubusercontent.com/50491971/104853779-5a518d00-5903-11eb-829e-8da443bd5373.PNG)  
  On remarque donc qu'entre 1960 et 2000, la majorité des émissions de CO2 sont produites par les pays de à revenu moyen haut (254 M) et haut (417 M) soit plus de 90 % des émissions en représentant 55 % de la population mondiale en 2000.
  
  ![Income2000-2016](https://user-images.githubusercontent.com/50491971/104853781-5a518d00-5903-11eb-8a54-f85a2cc17b13.PNG)  
  Entre 2000 et 2016, les à revenu moyen haut (216 M) et haut (213 M) émettent toujours 90 % des émissions en représentant 51 % de la population mondiale en 2016.
-On remarque donc un bond du revenu moyen haut qui dépasse les pays à revenu haut en terme d'émissions, mais les disparités restent similaires.
+On remarque donc un bond du revenu moyen haut qui dépasse les pays à revenu haut en terme d'émissions, mais les disparités restent similaires.  
  
+ Au final, ce dashboard permet de faire un certain nombre d'analyses sur plusieurs critères et donc de suivre l'évolution des émissions de CO2 dans le monde et dans les différents pays.
