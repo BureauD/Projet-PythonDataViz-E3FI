@@ -157,7 +157,7 @@
  ![Histo2000-2016](https://user-images.githubusercontent.com/50491971/104852980-1e67f900-58fe-11eb-83bf-2dcb063558f2.PNG)
  Entre 2000 et 2016, il y a eu une augmentation de 39 M d'émissions globales sur 4 ans. C'est moins qu'entre 1960 et 2000, mais sur une période bien plus courte. On remarque donc bien que la tendance s'accélère et est à la hausse.
 
-Il est également intéressant de comparer les émissions de CO2 en fonction du revenu. La banque mondiale identifie quatre catégories de revenu national brut d'un pays divisé par son nombre d'habitants :
+Il est également intéressant de comparer les émissions de CO2 en fonction du revenu. La banque mondiale identifie [quatre catégories de revenu](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups#:~:text=For%20the%20current%202021%20fiscal,those%20with%20a%20GNI%20per) selon revenu national brut d'un pays divisé par son nombre d'habitants :
  
  - Moins de $1.035 : **Bas revenu**
  - Entre $1.036 et $4,045 : **Revenu moyen bas**
