@@ -56,8 +56,8 @@ Ensuite, on récupère la liste des noms des fichiers avec la fonction `get_csv_
 les pays qui seront présent dans le nouveau dataframe sont filtré en amont. Pour ne garder que les pays unique, et non certains ensembles
 de pays tels que les rassemblement de continents ou les unions de plusieurs pays, tous les pays contenant l'un des mots suivant est enlevé des
 pays à parcourir : `"&", "dividend", "IBRD", "OECD", "World", "America", "Africa", "Asia", "Aruba",
-                    "Europe", "IDA", "Euro", "Fragile"`
-Le nouveau dataframe possède 12825 lignes et 9 colonnes qui sont les suivantes :
+                    "Europe", "IDA", "Euro", "Fragile"`  
+Le nouveau dataframe possède 12825 lignes et 9 colonnes, qui sont les suivantes :
 - 'Country Name'
 - 'Country Code'
 - 'Year'
@@ -67,7 +67,11 @@ Le nouveau dataframe possède 12825 lignes et 9 colonnes qui sont les suivantes 
 - 'Total CO2 emissions (kt)'
 - 'Total CO2 emissions (metric tons per capita)'
 - 'Total CO2 emissions (kg per PPP $ of GDP)'
-
+  
+Ces colonnes sont associés aux différentes listes de données qui ont été rempli en itérant sur chaque pays et chaque années.
+Les colonnes représentant les émissions totales represente le nombre total d'émissions émis dans les années d'avant : la données représentant
+le nombre total d'émissions émissions en 1980 prend la valeur de la somme de toutes les lignes d'avant.
+Ceci permet d'avoir les informations des émissions émissions émise lors d'une certaines périodes
 
 Finalement, le dashboard peut être lancé avec `dashboard(data)`. Ici les différentes fonctions pour créer les graphiques sont appelées : 
 * create_scatter(data, selected_country) : Cette fonction prend les données et un pays en paramètre et retourne un graphique en nuage de points
