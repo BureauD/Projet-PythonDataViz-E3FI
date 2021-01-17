@@ -108,10 +108,13 @@ En analysant les données du dashboard on peut faire différents constats par ra
 
 ![FirstRow](https://user-images.githubusercontent.com/50491971/104844887-ee573080-58d2-11eb-883b-aaa11a6d9314.PNG)
 
-Si on prend la carte et le diagramme circulaire des émissions depuis 1960, on remarque 3 pays qui sortent du lot : Les Etats-Unis, la Chine, et la Russie anciennement URSS. En effet, on remarque qu'à eux seuls, ces pays ont émis 51.1 % des émissions de CO2 soit plus de la moitié des émissions totales dans le monde.
+Si on prend la carte et le diagramme circulaire des émissions depuis 1960, on remarque 3 pays qui sortent du lot : les Etats-Unis, la Chine, et la Russie anciennement URSS. En effet, on remarque qu'à eux seuls, ces pays ont émis 51.1 % des émissions de CO2 soit plus de la moitié des émissions totales dans le monde.
 On remarque également que d'autres pays d'Asie tel que l'Inde ou le Japon, ou d'Europe avec la France ou l'Allemagne représentent également un pourcentage conséquent, mais bien loin des trois plus gros pays. On remarque également que presque 80 % des émissions globales ont été émises par à peine une vingtaine de pays.
 
-De plus, même parmi les 3 premiers, il existe de grands écarts : les Etats-Unis sont loin devant avec 270 M de kilotonnes de CO2 émises sur cette période, la Chine est en seconde place avec 189 M et la Russie avec 132 M. Pourtant si on regarde seulement entre 2000 et 2016, on fait un constat bien différent, car la Chine est à présent numéro 1 avec 120M d'émissions, les Etats-Unis deuxième avec 87M et la Russie troisième avec près de 27M, presque à égalité avec l'Inde. Ces 3 pays reprèsente à présent 48.54% des émissions totales, comme on peut le voir ci dessous: 
+De plus, même parmi les 3 premiers, il existe de grands écarts : les Etats-Unis sont loin devant avec 270 M de kilotonnes de CO2 émises sur cette période, la Chine est en seconde place avec 189 M et la Russie avec 132 M. Pourtant si on regarde seulement entre 2000 et 2016, on fait un constat bien différent, car la Chine est à présent numéro 1 avec 120M d'émissions, les Etats-Unis deuxième avec 87M et la Russie troisième avec près de 27M, presque à égalité avec l'Inde. Ces 3 pays représentent à présent 48.54 % des émissions totales, comme on peut le voir ci-dessous :  
+
+![FirstRow2000-2016](https://user-images.githubusercontent.com/50491971/104846712-34fd5880-58dc-11eb-942b-53eae07b8bd2.PNG)
+
 
 
 
