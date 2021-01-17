@@ -90,6 +90,15 @@ la fonction `go.Choropleth()` du module `plotly`.
 * `create_pie_chart(data, years_range, data_filter)`: Cette fonction permet de créer le diagramme circulaire en fonctions des données 
 spécifié par `data_filter`. Comme il y a un nombre élevé de pays à afficher et que un grand nombre de ces pays représente un pourcentage 
 assez faible du total, les pays considérés en dessous d'un certain seuil sont rassemblé dans la catégorie `Other countries`. 
-Le graphique est créé grâce à la fonction `go.Pie()` du module `plotly`.
+Le graphique est créé grâce à la fonction `go.Pie()` du module `plotly`.  
+
+Tout les graphiques nécessaires au dashboard sont maintenant prêt, et on peut les ajouter à l'app qui a été créée tels que `app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])`. L'app utilise le module `dash_bootstrap_components` pour bien organiser les graphiques sur la page en terme de lignes (`dbc.Row`) et de colonnes (`dbc.Col`), l'organisation de la page étant définie dans la fonction `app.layout()`. Ce layout possèdent trois conteneur `html.Div` : 
+- Le premier contient la carte et le diagramme circulaire. Il y a également un curseur pour sélectionner la période sur laquelle on veut les données et un menu de sélection pour choisir quel type de données on veut. Pour la carte, il y a également une case à cocher pour utiliser l'échelle logarithmique ou non.
+- Le second contient l'histogramme des émissions globales au cours du temps et l'histogramme en fonction des revenus. Comme précédemment, il y a un curseur pour sélectionner la période sur laquelle on veut les données.
+- Le dernier contient seulement le diagramme à point et un menu de sélection pour choisir le pays.  
+
+Il faut également mettre à jour les graphiques lorsque que les différents menus de sélection et autres éléments interactifs correspondant sont changé. Pour cela, il faut créer trois fonctions, une pour chaque conteneur, avec le décorateur `app.callback(dash.dependencies.Output(),dash.dependencies.Input())` devant les fonctions. Pour chaque fonction, la ou les sorties sont les différents graphiques associés au conteneur et les entrées sont les valeurs des éléments interactifs. Les fonctions peuvent ainsi appeler les fonctions qui créent le graphique approprié avec les nouveaux paramètres pour actualiser la page.  
+
+Pour finir, l'app est lancée avec `app.run_server(debug=True)` et le dashboard est prêt à l'utilisation.
 
 ## Rapport d'analyse
