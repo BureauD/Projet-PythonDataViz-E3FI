@@ -64,15 +64,15 @@ def get_csv_files():
     Returns:
         List of String: Names of csv files
     """
-    csv_files = list()
+    csv_files = ["", "", ""]
     # Find the csv files and store names in global variables
     for filename in os.listdir(CSV_FILES_PATH):
         if re.match(r"API_EN.ATM.CO2E.KT_DS2_.*._csv_v2_.*.csv", filename):
-            csv_files.append(filename)
+            csv_files[0] = filename
         elif re.match(r"API_EN.ATM.CO2E.PC_DS2_.*._csv_v2_.*.csv", filename):
-            csv_files.append(filename)
+            csv_files[1] = filename
         elif re.match(r"API_EN.ATM.CO2E.PP.GD_DS2_.*._csv_v2_.*.csv", filename):
-            csv_files.append(filename)
+            csv_files[2] = filename
 
     return csv_files
 
